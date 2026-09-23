@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import AuthNav from "@/components/AuthNav";
 
 const cards = [
   {
@@ -37,13 +38,13 @@ const cards = [
     icon: "🕌",
     title: "مواقيت الصلاة",
     text: "تابع أوقات الصلوات اليومية بسهولة.",
-    href: "#prayer",
+    href: "/prayer",
   },
   {
     icon: "🧭",
     title: "القبلة",
     text: "اعرف اتجاه القبلة أينما كنت.",
-    href: "#qibla",
+    href: "/qibla",
   },
 ];
 
@@ -102,9 +103,16 @@ export default function Home() {
           <a href="/youtube" className="transition hover:text-amber-200">
             يوتيوب
           </a>
+          <a href="/prayer" className="transition hover:text-amber-200">
+            مواقيت الصلاة
+          </a>
+          <a href="/qibla" className="transition hover:text-amber-200">
+            القبلة
+          </a>
           <a href="#about" className="transition hover:text-amber-200">
             من نحن
           </a>
+          <AuthNav />
         </div>
       </nav>
 

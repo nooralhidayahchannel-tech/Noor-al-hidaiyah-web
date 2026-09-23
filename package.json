@@ -10,7 +10,9 @@
   },
   "dependencies": {
     "@quranjs/api": "^3.8.0",
+    "adhan": "^4.4.6",
     "axios": "^1.20.0",
+    "firebase": "^12.19.0",
     "next": "16.3.5",
     "react": "19.2.8",
     "react-dom": "19.2.8"
