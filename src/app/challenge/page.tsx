@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { useUser } from "@/hooks/useUser";
+import { loadUserField, saveUserField } from "@/lib/userData";
 
 type Question = {
   q: string;
@@ -77,6 +79,7 @@ function pickToday(): Question[] {
 const STORAGE_KEY = "noor-challenge";
 
 export default function ChallengePage() {
+  const { user, ready } = useUser();
   const questions = useMemo(() => pickToday(), []);
   const [step, setStep] = useState(0);
   const [selected, setSelected] = useState<number | null>(null);
@@ -85,18 +88,23 @@ export default function ChallengePage() {
   const [alreadyDone, setAlreadyDone] = useState<number | null>(null);
 
   useEffect(() => {
-    try {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      if (raw) {
-        const saved = JSON.parse(raw);
-        if (saved.day === todaySeed()) {
-          setAlreadyDone(saved.score);
+    if (!ready) return;
+    if (user) {
+      loadUserField<{ day: number; score: number }>(user.uid, "challengeToday").then((saved) => {
+        if (saved && saved.day === todaySeed()) setAlreadyDone(saved.score);
+      });
+    } else {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (raw) {
+          const saved = JSON.parse(raw);
+          if (saved.day === todaySeed()) setAlreadyDone(saved.score);
         }
+      } catch {
+        // ignore
       }
-    } catch {
-      // ignore
     }
-  }, []);
+  }, [ready, user]);
 
   function choose(index: number) {
     if (selected !== null) return;
@@ -112,13 +120,15 @@ export default function ChallengePage() {
       } else {
         setScore(nextScore);
         setDone(true);
-        try {
-          localStorage.setItem(
-            STORAGE_KEY,
-            JSON.stringify({ day: todaySeed(), score: nextScore })
-          );
-        } catch {
-          // ignore
+        const record = { day: todaySeed(), score: nextScore };
+        if (user) {
+          saveUserField(user.uid, "challengeToday", record);
+        } else {
+          try {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(record));
+          } catch {
+            // ignore
+          }
         }
       }
     }, 700);

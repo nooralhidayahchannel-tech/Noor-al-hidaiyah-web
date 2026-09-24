@@ -1,0 +1,17 @@
+{
+  "name": "نور الهداية",
+  "short_name": "نور الهداية",
+  "description": "منصة إسلامية تقدّم محتوى نافع بطريقة جميلة وبسيطة وسهلة الاستخدام.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#062b1f",
+  "theme_color": "#062b1f",
+  "dir": "rtl",
+  "lang": "ar",
+  "icons": [
+    { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
